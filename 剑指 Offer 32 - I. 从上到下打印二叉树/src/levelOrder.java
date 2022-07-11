@@ -17,7 +17,7 @@ class Solution {
 		}
 		Queue<TreeNode> queue = new LinkedList<TreeNode>();
 		ArrayList<Integer> ans = new ArrayList<Integer>();
-		queue.add(root);
+		queue.offer(root);
 
 		while (!queue.isEmpty()) {
 //			此处不需要new新的节点 只需要一个地址即可
