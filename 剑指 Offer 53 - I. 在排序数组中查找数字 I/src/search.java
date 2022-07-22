@@ -34,9 +34,11 @@ class Solution_binary {
 			}
 		}
 		int right = i;
+		// 在更新right边界值之前，需要判断这个数组中是否存在target
 		if (j >= 0 && nums[j] != target) {
 			return 0;
 		}
+//		重置指针
 		i = 0;
 		j = nums.length - 1;
 		while (i <= j) {
