@@ -28,3 +28,25 @@ class Solution_mod {
 		return res.toString();
 	}
 }
+
+//三次反转法
+class Solution_reverse {
+	public String reverseLeftWords(String s, int n) {
+		int len = s.length();
+		StringBuilder res = new StringBuilder(s);
+		reverseString(res, 0, n - 1);
+		reverseString(res, n, len - 1);
+		return res.reverse().toString();
+
+	}
+
+	public void reverseString(StringBuilder res, int start, int end) {
+		while (start < end) {
+			char temp = res.charAt(start);
+			res.setCharAt(start, res.charAt(end));
+			res.setCharAt(end, temp);
+			start++;
+			end--;
+		}
+	}
+}

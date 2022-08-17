@@ -38,6 +38,39 @@ class Solution_builder {
 		return strbuder.toString();
 	}
 }
+
+class Solution_doublepoint {
+	public String replaceSpace(String s) {
+		if (s == null || s.length() == 0) {
+			return s;
+		}
+		StringBuilder str = new StringBuilder();
+		for (int i = 0; i < s.length(); i++) {
+			if (s.charAt(i) == ' ') {
+				str.append("  ");
+			}
+		}
+		if (str.length() == 0) {
+			return s;
+		}
+		int left = s.length() - 1;
+		s = s + str.toString();
+		int right = s.length() - 1;
+		char[] res = s.toCharArray();
+		while (left >= 0) {
+			if (res[left] == ' ') {
+				res[right--] = '0';
+				res[right--] = '2';
+				res[right] = '%';
+			} else {
+				res[right] = res[left];
+			}
+			left--;
+			right--;
+		}
+		return new String(res);
+	}
+}
 //原地修改法，适用于c++，在c++中String为可变类型，可先修改string长度，然后倒序遍历修改
 //class Solution {
 //public:
