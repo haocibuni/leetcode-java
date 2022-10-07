@@ -8,7 +8,7 @@ class Solution {
 		}
 //		二分之一重量 向下取整
 		int target = sum / 2;
-//		dp数组：当背包称重j时能放的价值最高的数组
+//		dp数组：当背包称重j时能放的重量最高的数组
 		int[] dp = new int[target + 1];
 		for (int i = 0; i < stones.length; i++) {
 			for (int j = target; j >= stones[i]; j--) {
