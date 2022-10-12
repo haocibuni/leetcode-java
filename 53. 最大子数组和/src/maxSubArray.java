@@ -1,4 +1,5 @@
-class Solution {
+//贪心算法
+class Solution1 {
 	public int maxSubArray(int[] nums) {
 		if (nums.length == 1) {
 			return nums[0];
@@ -15,5 +16,21 @@ class Solution {
 			}
 		}
 		return sum;
+	}
+}
+
+//动态规划法
+class Solution {
+	public int maxSubArray(int[] nums) {
+//		dp数组表示i数字时最大的和
+		int[] dp = new int[nums.length];
+		int res = nums[0];
+		dp[0] = nums[0];
+		for (int i = 1; i < dp.length; i++) {
+			dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
+//			记录最大值
+			res = res > dp[i] ? res : dp[i];
+		}
+		return res;
 	}
 }
