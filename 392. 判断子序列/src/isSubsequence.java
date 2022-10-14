@@ -1,3 +1,4 @@
+//此题可根据最大公共序列解
 class Solution {
 	public boolean isSubsequence(String s, String t) {
 		char[] sChars = s.toCharArray();
@@ -8,6 +9,7 @@ class Solution {
 				if (sChars[i - 1] == tChars[j - 1]) {
 					dp[i][j] = dp[i - 1][j - 1] + 1;
 				} else {
+//					此处错误
 					dp[i][j] = dp[i][j - 1];
 				}
 
