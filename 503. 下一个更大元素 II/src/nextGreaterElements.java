@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.Stack;
 
+//µ¥µ÷Õ»·¨
 class Solution {
 	public int[] nextGreaterElements(int[] nums) {
 		int length = nums.length;
@@ -16,7 +17,7 @@ class Solution {
 					res[stack.peek()] = nums[i % length];
 					stack.pop();
 				}
-				stack.push(nums[i % length]);
+				stack.push(i % length);
 			}
 		}
 		return res;
