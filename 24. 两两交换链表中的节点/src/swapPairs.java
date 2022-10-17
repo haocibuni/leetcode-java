@@ -26,6 +26,7 @@ class Solution {
 		ListNode pre = dummy;
 		while (pre.next != null && pre.next.next != null) {
 			pre.next = head.next;
+//			临时节点存储前两个节点之后断开的节点
 			ListNode temp = head.next.next;
 			head.next.next = head;
 			head.next = temp;

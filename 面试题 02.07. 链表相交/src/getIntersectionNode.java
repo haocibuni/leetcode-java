@@ -9,6 +9,7 @@ public class ListNode {
 	}
 }
 
+//肯定能到null相等 或 公共节点相等
 public class Solution {
 	public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 		ListNode a = headA, b = headB;
