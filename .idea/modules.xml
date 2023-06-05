@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Merge Sorted Array/Merge Sorted Array.iml" filepath="$PROJECT_DIR$/Merge Sorted Array/Merge Sorted Array.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/leetcode-java.iml" filepath="$PROJECT_DIR$/.idea/leetcode-java.iml" />
-      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
     </modules>
   </component>
 </project>
