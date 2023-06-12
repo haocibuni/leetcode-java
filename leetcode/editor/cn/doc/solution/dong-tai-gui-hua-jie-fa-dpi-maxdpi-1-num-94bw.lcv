@@ -1,0 +1,56 @@
+# 1.思路（动态规划）
+
+## 1.1 dp数组的含义
+
+$dp[i]$：从$[0 , i]$的任意一点处出发，你最大可以跳跃到的位置。
+
+例如$nums = [2,3,1,1,4]$中:
+
+$dp[0] = 2$   $dp[1] = 4$   $dp[2] = 4$  $dp[3] = 4$ $dp[4] = 8$（其实我们没有必要去讨论最后一个下标，因为从最后一个下标出发一定可以到最后一个）
+
+## 1.2 dp数组的递推公式
+
+$dp[i] = max(dp[i-1] , nums[i]+i)$
+
+$dp[i]$ 代表的是从$[0 , i]$的任意一点处出发，你最大可以跳跃到的位置，那么就考虑是否从下标i出发，于是$dp[i]$可以由两个方面推出:
+
+- 从下标$i$出发，能到达的位置是$nums[i]+i$
+- 不从下标$i$出发，最大能到达的就是$dp[i-1]$
+
+所以 $dp[i] = max(dp[i-1] , nums[i]+i)$
+
+由$dp[i]$的定义可以知道，$dp[0] = nums[0]$
+
+## 1.3 怎么判断是不是可以到达最后一位？
+
+从$dp[i]$的定义我们可以知道，$dp[i]$的大小一定是单调不减的，因为$nums$中的元素都是大于等于0的，我们不可能倒着走回来。把我们想象成棋子，当遇到什么情况的时候，棋子将会原地踏步无法向前进呢？其实就是当$dp[i] == i$的时候。试想，当棋子来到下标$i$的时候，上帝却告诉它你最多只能到下标$i$，那棋子不就再也不能向前进了吗？想通了这个代码就呼之欲出了。
+
+# 2. 代码（Java实现）
+
+* java
+
+```java
+class Solution {
+	public boolean canJump(int[] nums) {
+		if (nums.length == 1) {
+			return true;
+		}
+		if (nums[0] == 0) {
+			return false;
+		}
+		int[] dp = new int[nums.length];
+		dp[0] = nums[0];
+		for (int i = 1; i < nums.length - 1; i++) {
+			dp[i] = Math.max(dp[i - 1], nums[i] + i);
+            if(dp[i] >= nums.length - 1){
+                return true;
+            }
+			if (dp[i] == i) {
+				return false;
+			}
+		}
+		return true;
+	}
+}
+```
+

@@ -1,0 +1,55 @@
+### 解题思路
+
+**状态表示：**
+
+令`f[i]`表示是否可以到达`i`
+
+**递推分析：**
+
+当我们考虑`f[i]`的可达情况时，我们可以发现，如果`i`可达，那么一定是从前面的某个可达的点`j`**直接**跳过去的，并且`j i`之间的距离小于等于`j`对应的步数的值，如果`i`之前存在这样可以直接跳过去的点，就说明`i`可达，否则`i`不可达，于是我们遍历一下`i`之前所有的点即可
+
+这个递推分析过程很像这道题[10. 正则表达式匹配](/problems/regular-expression-matching/)
+
+**递推公式：**
+
+`f[i] = (f[i - 1] && nums[i - 1] >= 1) || (f[i - 2] && nums[i - 2] >= 2)......|| (f[0] && nums[0] >= i)`
+
+初始`f[0] = true`，然后从前往后按序递推即可
+
+**优化**
+
+注意到，如果`i`不可达，那么`i`之后的所有点也必然不可达，因为`i`之前的所有点最远都到达不了`i`, 那必然也到达不了`i`之后的点
+时间复杂度虽然还是`O(n^2)`但是避免了很多重复计算，最后：
+
+![image.png](https://pic.leetcode.cn/1681174193-UsBwMG-image.png)
+
+### 代码
+
+* cpp
+
+```cpp
+class Solution {
+public:
+
+    bool canJump(vector<int>& nums) {
+        int l = nums.size();
+        vector<bool> f(l);
+        f[0] = true;
+
+        for(int i = 1; i < l; i ++)
+        {
+            for(int j = i - 1; j >= 0; j --)
+                if(f[j] && nums[j] >= i - j)
+                {
+                   f[i] = true;
+                   break; 
+                }
+            //如果i不可达，则直接退出循环，i后面的点都不可达
+            if(!f[i]) break;
+        }
+
+        return f[l - 1];                                 
+    }
+};
+```
+
