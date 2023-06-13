@@ -1,0 +1,18 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int left = 0,right=1,res=1;
+        while(right<nums.length){
+            if(nums[left]==nums[right]){
+                right++;
+            }else{
+                res++;
+                left++;
+                nums[left]=nums[right];
+                right++;
+            }
+        }
+        return res;
+    }
+}
+//runtime:1 ms
+//memory:42.9 MB

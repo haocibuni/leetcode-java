@@ -1,0 +1,19 @@
+class Solution {
+	public boolean canJump(int[] nums) {
+		if (nums.length == 0) {
+			return true;
+		}
+		int coverRange = 0;
+		for (int i = 0; i <= coverRange; i++) {
+			coverRange = Math.max(coverRange, nums[i] + i);
+			if (coverRange >= nums.length - 1) {
+				return true;
+			}
+
+		}
+		return false;
+
+	}
+}
+//runtime:2 ms
+//memory:42.1 MB

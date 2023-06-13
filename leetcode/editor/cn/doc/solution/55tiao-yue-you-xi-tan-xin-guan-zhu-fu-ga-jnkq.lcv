@@ -1,0 +1,53 @@
+> Problem: [55. 跳跃游戏](https://leetcode.cn/problems/jump-game/description/)
+
+[TOC]
+
+# 思路
+
+> 讲述看到这一题的思路
+
+# 解题方法
+
+> 描述你的解题方法
+
+# 复杂度
+
+- 时间复杂度:
+
+> 添加时间复杂度, 示例： $O(n)$
+
+- 空间复杂度:
+
+> 添加空间复杂度, 示例： $O(n)$
+
+# Code
+
+* []
+
+```Java
+
+class Solution {
+    public boolean canJump(int[] nums) {
+        
+        //只有一个元素--起始位置就是终止位置，可以直接到终点
+        if(nums.length == 1){
+            return true;
+        }
+
+       //初始范围应该是0，因为下面迭代是从下标0开始的
+       int cover  = 0;
+
+       //i在覆盖范围内移动
+       for(int i = 0 ; i <= cover; i ++){
+           cover = Math.max(cover, i + nums[i]);//判断大小得到新范围
+           
+           //cover 大于等于终点下标，覆盖范围可以覆盖到终点
+           if(cover >= nums.length - 1){
+               return true;
+           }
+       }
+              return false;
+    }
+}
+```
+
