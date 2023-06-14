@@ -1,0 +1,47 @@
+- 红蓝染色法具体细节可参考灵神 [@灵茶山艾府](/u/endlesscheng) b站视频：
+  https://www.bilibili.com/video/BV1QK411d76w/?share_source=copy_web&vd_source=a71f9ad96b761fa976590ef0f63f1405
+
+- 个人理解
+
+1. `right` 左移使右侧变蓝 (判断条件为 `true` )
+2. `left` 右移使左侧变红 (判断条件为 `false` )
+3. 故确定二分处 ( `mid` ) 的染色条件是关键
+
+此题染色条件比较难读懂，看了 [@liweiwei1419](/u/liweiwei1419) 的 [题解](https://leetcode.cn/problems/h-index/solutions/870465/er-fen-cai-lun-wen-pian-shu-java-by-liwe-zoh7/) 后才明白此题关键是在论文数数组上进行二分而非在`citations`数组上进行，例如总共4篇论文，则需要在数组`[0,1,2,3,4]`上进行二分。
+
+上`C++`答案：
+
+* Cpp
+
+```Cpp
+class Solution {
+public:
+    bool is_blue(vector<int>& citations, int pos)
+    {
+        int ans = 0;
+        for ( auto e : citations )
+        {
+            if ( e>=pos )
+                ans++;
+        }
+        return pos>ans; //此处有坑，由于题目要求找最大的h指数，
+                        //所以我将染色条件定义为论文数严格大于被引用数变为蓝色，
+                        //随后我取蓝色左侧第一个数即 right-1 即为最大h指数
+    }
+    int hIndex(vector<int>& citations) 
+    {
+        int n = citations.size();
+        int left = -1, right = n+1; //开区间解答
+        while ( left+1<right )
+        {
+            int mid = left + ( right - left ) / 2;
+            if ( is_blue(citations, mid) )
+                right = mid;
+            else
+                left = mid;
+        }
+        return right-1;
+    }
+};
+```
+

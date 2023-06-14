@@ -43,7 +43,18 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int jump(int[] nums) {
-
+        int maxScope=0,step=0,end=0;
+//      遍历到倒数第二个位置
+        for (int i=0;i<nums.length-1;i++){
+//          更新最远距离
+            maxScope = Math.max(nums[i]+i,maxScope);
+//          若当前位置在边界上，则步数加加并更新边界
+            if(i==end){
+                step++;
+                end = maxScope;
+            }
+        }
+        return step;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

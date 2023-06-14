@@ -1,0 +1,43 @@
+> Problem: [274. H 指数](https://leetcode.cn/problems/h-index/description/)
+
+[TOC]
+
+# 思路
+
+> h最大为数组长度
+
+# 解题方法
+
+> 先将数组排序，然后从小到大遍历，h值也随着遍历次数加一而减一（剩余满足要求的数值的个数也在减少），直到遍历到的值大于当前最大的h值，即找到了最大的值。
+
+# 复杂度
+
+- 时间复杂度: $O(n)$
+
+> 添加时间复杂度, 示例： $O(n)$
+
+- 空间复杂度: $O(1)$
+
+> 添加空间复杂度, 示例： $O(n)$
+
+# Code
+
+* []
+
+```Java
+
+class Solution {
+    public int hIndex(int[] citations) {
+        Arrays.sort(citations);
+        int count = citations.length;
+        for (int i = 0;i < citations.length;i++) {
+            if (citations[i] >= count) {
+                return count;
+            }
+            count--;
+        }
+        return 0;
+    }
+}
+```
+
