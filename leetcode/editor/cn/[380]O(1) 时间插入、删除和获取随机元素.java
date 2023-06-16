@@ -49,23 +49,47 @@
 // Related Topics 设计 数组 哈希表 数学 随机化 👍 682 👎 0
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+
 //leetcode submit region begin(Prohibit modification and deletion)
 class RandomizedSet {
+    List<Integer> nums;
+    HashMap<Integer,Integer> hashmap;
+    Random random;
 
     public RandomizedSet() {
+        nums = new ArrayList<Integer>();
+        hashmap = new HashMap<Integer, Integer>();
+        random = new Random();
 
     }
     
     public boolean insert(int val) {
-
+        if (hashmap.containsKey(val)){
+            return false;
+        }
+        nums.add(val);
+        hashmap.put(val,nums.size()-1);
+        return true;
     }
     
     public boolean remove(int val) {
-
+        if (!hashmap.containsKey(val)){
+            return false;
+        }
+        int index = hashmap.get(val);
+        nums.set(index,nums.get(nums.size()-1));
+        hashmap.put(nums.get(nums.size()-1),index);
+        nums.remove(nums.size()-1);
+        hashmap.remove(val);
+        return true;
     }
     
     public int getRandom() {
-
+        return nums.get(random.nextInt(nums.size()));
     }
 }
 
