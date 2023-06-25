@@ -1,0 +1,25 @@
+class Solution {
+	public int trap(int[] height) {
+		int len = height.length;
+		if (len <= 2) {
+			return 0;
+		}
+		int res = 0;
+		int[] l_max = new int[len], r_max = new int[len];
+		l_max[0] = height[0];
+		r_max[len-1] = height[len-1];
+		for (int i = 1; i < len; i++) {
+			l_max[i] = Math.max(l_max[i - 1], height[i]);
+		}
+		for (int i = len - 2; i >= 0; i--) {
+			r_max[i] = Math.max(r_max[i + 1], height[i]);
+		}
+		for (int i = 1; i < len - 1; i++) {
+
+			res += Math.min(l_max[i], r_max[i]) - height[i];
+		}
+		return res;
+	}
+}
+//runtime:1 ms
+//memory:41.6 MB

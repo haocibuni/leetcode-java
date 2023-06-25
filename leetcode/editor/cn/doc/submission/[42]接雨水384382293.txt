@@ -1,0 +1,26 @@
+class Solution {
+	public int trap(int[] height) {
+		int len = height.length;
+		if (len <= 2) {
+			return 0;
+		}
+		int res = 0;
+		for (int i = 1; i < len - 1; i++) {
+			int l_max = 0, r_max = 0;
+			for (int j = 1; j <= i; j++) {
+				l_max = Math.max(height[j], l_max);
+			}
+			for (int j = len - 1; j >= i; j--) {
+				r_max = Math.max(height[j], r_max);
+			}
+			res += Math.min(l_max, r_max) - height[i];
+		}
+		return res;
+	}
+}
+//total_testcases:322
+//total_correct:187
+//input_formatted:[4,2,0,3,2,5]
+//expected_output:9
+//code_output:3
+//last_testcase:[4,2,0,3,2,5]

@@ -1,0 +1,23 @@
+class Solution {
+	public int candy(int[] ratings) {
+		int[] candyVec = new int[ratings.length];
+		candyVec[0] = 1;
+		for (int i = 1; i < ratings.length; i++) {
+			candyVec[i] = (ratings[i] > ratings[i - 1]) ? candyVec[i - 1] + 1 : 1;
+
+		}
+		for (int i = ratings.length - 2; i >= 0; i--) {
+			if (ratings[i] > ratings[i + 1]) {
+				candyVec[i] = Math.max(candyVec[i], candyVec[i + 1] + 1);
+			}
+		}
+		int result = 0;
+		for (int num : candyVec) {
+			result += num;
+		}
+		return result;
+
+	}
+}
+//runtime:2 ms
+//memory:41.9 MB

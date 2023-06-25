@@ -51,7 +51,27 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
-
+        int len = gas.length;
+        int i=0;
+        while (i<len){
+            int cnt = 0;
+            int sumGas = 0,sumCost=0;
+            while(cnt<len){
+                int j = (i+cnt)%len;
+                sumGas += gas[j];
+                sumCost += cost[j];
+                if (sumCost>sumGas){
+                    break;
+                }
+                cnt++;
+            }
+            if (cnt==len){
+                return i;
+            }else{
+                i = i+cnt+1;
+            }
+        }
+        return -1;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
