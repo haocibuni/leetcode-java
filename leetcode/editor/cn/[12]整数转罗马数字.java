@@ -70,9 +70,38 @@
 // Related Topics 哈希表 数学 字符串 👍 1125 👎 0
 
 
+import java.util.HashMap;
+
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public String intToRoman(int num) {
+        HashMap<Integer,String> hashMap = new HashMap<>();
+        hashMap.put(1,"I");
+        hashMap.put(4,"IV");
+        hashMap.put(5,"V");
+        hashMap.put(9,"IX");
+        hashMap.put(10,"X");
+        hashMap.put(40,"XL");
+        hashMap.put(50,"L");
+        hashMap.put(90,"XC");
+        hashMap.put(100,"C");
+        hashMap.put(400,"CD");
+        hashMap.put(500,"D");
+        hashMap.put(900,"CM");
+        hashMap.put(1000,"M");
+        int[] nums = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        StringBuilder stringBuilder = new StringBuilder();
+        while (num>0){
+            for (int i = 0;i<13;i++){
+                if (num>=nums[i]){
+                    stringBuilder.append(hashMap.get(nums[i]));
+                    num = num-nums[i];
+                    break;
+                }
+            }
+
+        }
+        return stringBuilder.toString();
 
     }
 }
