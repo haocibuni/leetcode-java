@@ -1,0 +1,24 @@
+class Solution {
+    public int lengthOfLastWord(String s) {
+        int len = s.length();
+        int i = len-1;
+        int res = 0;
+        while(s.charAt(i)==' '){
+            i--;
+        }
+        while(s.charAt(i)!=' '){
+            i--;
+            res++;
+        }
+        return res;
+
+    }
+}
+
+//runtime_error:java.lang.StringIndexOutOfBoundsException: String index out of range: -1
+  at line 48, java.base/java.lang.StringLatin1.charAt
+  at line 1513, java.base/java.lang.String.charAt
+  at line 9, Solution.lengthOfLastWord
+  at line 54, __DriverSolution__.__helper__
+  at line 84, __Driver__.main
+//last_testcase:"a"
