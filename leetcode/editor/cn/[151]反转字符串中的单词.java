@@ -54,7 +54,23 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public String reverseWords(String s) {
+        char[] chars = s.toCharArray();
+        reverseChars(chars,0,chars.length-1);
+        for (int i=0; i<chars.length;i++){
+            if (chars[i]==' '){
+                continue;
+            }
+        }
+        return chars.toString();
 
     }
+    public void  reverseChars(char[] chars,int start,int end){
+        for (int i=start,j=end;i<j;i++,j--){
+            chars[i] ^= chars[j];
+            chars[j] ^= chars[i];
+            chars[i] ^= chars[j];
+        }
+    }
+
 }
 //leetcode submit region end(Prohibit modification and deletion)

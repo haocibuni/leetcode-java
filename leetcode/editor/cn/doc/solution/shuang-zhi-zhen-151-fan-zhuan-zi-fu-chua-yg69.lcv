@@ -1,0 +1,71 @@
+* 
+
+```
+class Solution {
+    // 双指针
+    public String reverseWords(String s) {
+        // 1.去除首尾以及中间多余空格
+        StringBuilder sb = removeSpace(s);
+        // 2.反转整个字符串
+        reverseString(sb , 0 , sb.length() - 1);
+        // 3.反转各个单词
+        reverseEachWord(sb);
+        return sb.toString();
+    }
+    private StringBuilder removeSpace(String s) {
+        // 左指针
+        int left = 0;
+        // 右指针
+        int right = s.length() - 1;
+        // 去除开头空格
+        while (s.charAt(left) == ' ') {
+            // 左指针向右跑，碰到第一个不是空格的字符停下
+            left++;
+        }
+        // 去除结尾空格
+        while (s.charAt(right) == ' ') {
+            // 右指针向左跑，碰到第一个不是空格的字符停下
+            right--;
+        }
+        StringBuilder sb = new StringBuilder();
+        // 去除单词间的空格
+        while (left <= right) {
+            char c = s.charAt(left);
+            if (c != ' ' || sb.charAt(sb.length() - 1) != ' ') {
+                sb.append(c);
+            }
+            left++;
+        }
+        return sb;
+    }
+     public void reverseEachWord(StringBuilder sb) {
+        int start = 0;
+        int end = 0;
+        int n = sb.length();
+        while (start < n) {
+            while (end < n && sb.charAt(end) != ' ') {
+                end++;
+            }
+            reverseString(sb, start, end - 1);
+            start = end + 1;
+            end = start;
+        }
+    }
+    /**
+     * 反转字符串指定区间[start, end]的字符
+     */
+    public void reverseString(StringBuilder sb, int start, int end) {
+        while (start < end) {
+            char temp = sb.charAt(start);
+            sb.setCharAt(start, sb.charAt(end));
+            sb.setCharAt(end, temp);
+            start++;
+            end--;
+        }
+    }
+}
+```
+
+**复杂度分析：**
+时间复杂度：O(N)
+空间复杂度：O(N)
