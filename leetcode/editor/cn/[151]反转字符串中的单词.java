@@ -56,12 +56,33 @@ class Solution {
     public String reverseWords(String s) {
         char[] chars = s.toCharArray();
         reverseChars(chars,0,chars.length-1);
+        int k=0;
         for (int i=0; i<chars.length;i++){
             if (chars[i]==' '){
                 continue;
             }
+            int begin = i;
+            while(i<chars.length && chars[i]!=' '){
+                i++;
+            }
+            for(int j= begin;j<i;j++){
+                if (j==begin){
+                    reverseChars(chars,begin,i-1);
+                }
+                chars[k++] = chars[j];
+                if (j==i-1){
+                    if (k<chars.length){
+                        chars[k++]=' ';
+                    }
+                }
+            }
+
         }
-        return chars.toString();
+        if (k==0){
+            return "";
+        }else{
+            return new String(chars,0,(k==chars.length)&&(chars[k-1]!=' ')?k:k-1);
+        }
 
     }
     public void  reverseChars(char[] chars,int start,int end){
