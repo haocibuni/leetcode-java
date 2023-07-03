@@ -1,0 +1,52 @@
+class Solution {
+	public void getNext(int[] next, String s) {
+//		前缀下标j后缀下标i
+		int j = -1;
+		next[0] = j;
+//		从1开始遍历
+		for (int i = 1; i < s.length(); i++) {
+//			若前后缀不等，则j下标回退
+			while (j >= 0 && s.charAt(i) != s.charAt(j + 1)) {
+				j = next[j];
+			}
+// 			若前后缀相等，则j++
+			if (s.charAt(i) == s.charAt(j + 1)) {
+				j++;
+			}
+//			然后把j复制到i
+			next[i] = j;
+//			i++
+		}
+	}
+
+	public int strStr(String haystack, String needle) {
+//		若模式串长度为0则返回0
+		if (needle.length() == 0) {
+			return 0;
+		}
+//      定义next数组，大小等于模式串大小
+		int[] next = new int[needle.length()];
+//		获取next数组
+		getNext(next, needle);
+		int j = -1;
+//		遍历字符串
+		for (int i = 0; i < haystack.length(); i++) {
+//			若字母不相等则模式串下标根据next数组进行回退
+			while (j >= 0 && haystack.charAt(i) != needle.charAt(j + 1)) {
+				j = next[j];
+			}
+//			若字母相等则模式串下标j++
+			if (haystack.charAt(i) == needle.charAt(j + 1)) {
+				j++;
+			}
+//			若j到达模式串尾部则返回长度
+			if (j == needle.length() - 1) {
+				return (i - needle.length() + 1);
+			}
+		}
+
+		return -1;
+	}
+}
+//runtime:1 ms
+//memory:39.1 MB
