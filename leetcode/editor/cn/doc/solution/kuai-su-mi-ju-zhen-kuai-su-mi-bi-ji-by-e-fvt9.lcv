@@ -1,0 +1,161 @@
+# 快速幂
+
+> 快速幂，就是快速算底数的n次幂。其时间复杂度为 O(logN)， 与朴素的O(N)相比效率有了极大的提高。
+
+**朴素模拟求幂：**
+
+* java
+
+```java
+int pow(int base, int exponent) {
+    while (exponent > 0) {
+        base *= base;
+        exponent--;
+    }
+    return base;
+}
+```
+
+时间复杂度为O(N)
+
+**快速幂：**
+
+* java
+
+```java
+int pow(int base, int exponent) {
+    int sum = 1;
+    while (exponent != 0) {
+        if ((exponent & 1) != 0) {
+            sum *= base;
+        }
+        exponent = exponent >> 1;  // 对指数进行右移位
+        base *= base;               // 让base的次幂以2的倍数增长
+    }
+    return sum;
+}
+```
+
+时间复杂度为O(logN)
+
+![image-20220727152527752.png](https://pic.leetcode-cn.com/1658912397-harjfL-image-20220727152527752.png)
+
+**原理**：将指数值化为二进制处理，相比较于朴素算法，时间复杂度从指数十进制转化为指数二进制长度，每次循环都将二进制右移并取最低位，而自然数N的二进制长度为log2N，因此这个循环至多遍历log2N次。即它的时间复杂度为`O(logN)`。
+
+___
+
+# 矩阵快速幂
+
+**矩阵乘法：**
+
+![image-20220727154656285.png](https://pic.leetcode-cn.com/1658912415-iDQYKi-image-20220727154656285.png)
+
+**注意：**
+
+1. 矩阵乘法没有交换律，也就是交换左右对结果有影响
+2. 矩阵乘法要求第一个矩阵的列数和第二个矩阵的行数相同
+3. 对于矩阵（行，列），（a, m）*(m, b) = (a, b)
+
+**矩阵快速幂：**
+
+虽然矩阵乘法不符合交换率，但符合结合律，因此在运算(n * n)矩阵幂时，自然可以用到快速幂算法。
+
+需要注意的是：根据矩阵的性质，以（4*4）矩阵为例，快速幂的初始sum为：
+
+![image-20220727163931462.png](https://pic.leetcode-cn.com/1658912543-CgdURJ-image-20220727163931462.png)
+
+> **矩阵快速幂运用：斐波那契数列**
+
+对于斐波那契数列：
+
+f(0) = 0,	f(1) = 1,	f(2) = 1,	f(n) = f(n - 1) + f(n - 2) ...
+
+定义矩阵 ：
+![image-20220727155701387.png](https://pic.leetcode-cn.com/1658912604-zfPYgV-image-20220727155701387.png)
+
+我们寻找一个矩阵 M，使得：
+![image-20220727155735581.png](https://pic.leetcode-cn.com/1658913042-xzMRqz-image-20220727155735581.png)
+
+根据定义可知 M 是 2 * 2 的矩阵：
+
+![image-20220727160026150.png](https://pic.leetcode-cn.com/1658912660-CBKgyW-image-20220727160026150.png)
+
+求解：
+
+* 
+
+```
+a*f(n) + b*f(n-1) = f(n+1)
+c*f(n) + d*f(n-1) = f(n)
+```
+
+解得：
+
+![image-20220727160402505.png](https://pic.leetcode-cn.com/1658912671-wBZgse-image-20220727160402505.png)
+
+因此，我们定义初始矩阵
+
+![image-20220727161656706.png](https://pic.leetcode-cn.com/1658912684-roIAsJ-image-20220727161656706.png)
+
+![image-20220727161709767.png](https://pic.leetcode-cn.com/1658912688-RugfaC-image-20220727161709767.png)
+
+![image-20220727161750906.png](https://pic.leetcode-cn.com/1658912693-qLiMqt-image-20220727161750906.png)
+
+![image-20220727164816902.png](https://pic.leetcode-cn.com/1658912710-KguYlW-image-20220727164816902.png)
+
+又因为：
+
+![image-20220727165045181.png](https://pic.leetcode-cn.com/1658912719-YtxNuA-image-20220727165045181.png)
+![image-20220727165242540.png](https://pic.leetcode-cn.com/1658912723-adSBbR-image-20220727165242540.png)
+
+因此我们可以直接取 矩阵 M 的 n-1次幂后的 a 位
+
+**综上所述**，我们只要快速计算出矩阵 M 的 n - 1 次幂，就可以得到 f(n) 的值，这里就可以用到快速幂算法！
+
+注意求值过程中需要取模
+
+* java
+
+```java
+// 矩阵快速幂求斐波那契数列
+class Solution {
+    static final int MOD = (int)(1e9) + 7;
+
+    public int fib(int n) {
+        if (n < 2) {
+            return n;
+        }
+
+        int[][] m = {{1,1},{1,0}};
+
+        // 求 m 的 n - 1次方
+        int[][] mn = pow(m, n - 1);
+        return mn[0][0];
+    }
+
+    // 矩阵快速幂算法
+    public int[][] pow(int[][] a, int n) {
+        int[][] sum = {{1,0},{0,1}};
+        while (n != 0) {
+            if ((n & 1) != 0) {
+                sum = multiply(sum, a);
+            }
+            n = n >> 1;
+            a = multiply(a, a);
+        }
+        return sum;
+    }
+
+    // 矩阵乘法
+    public int[][] multiply(int[][] a, int[][] b) {
+        int[][] c = new int[2][2];
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                 c[i][j] = (int) (((long) a[i][0] * b[0][j] + (long) a[i][1] * b[1][j]) % MOD);
+            }
+        }
+        return c;
+    }
+}
+```
+

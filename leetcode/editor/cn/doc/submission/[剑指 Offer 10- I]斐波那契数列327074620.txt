@@ -1,0 +1,24 @@
+class Solution {
+	static int mod = 1000000007;
+	static int N = 110;
+	static int[] cache = new int[N];
+
+	public int fib(int n) {
+		if (n < 2) {
+			return n;
+		}
+		if (cache[n] != 0) {
+			return cache[n];
+		}
+		cache[n] = fib(n - 1) + fib(n - 2);
+
+		return cache[n] % mod;
+
+	}
+}
+//total_testcases:51
+//total_correct:27
+//input_formatted:48
+//expected_output:807526948
+//code_output:512559680
+//last_testcase:48

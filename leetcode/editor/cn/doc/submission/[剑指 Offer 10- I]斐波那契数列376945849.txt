@@ -1,0 +1,47 @@
+class Solution {
+	public int fib(int n) {
+		if (n < 2) {
+			return n;
+		}
+		int[][] base = { { 1, 1 }, { 1, 0 } };
+		int power = n - 1;
+		int res[][] = Mult(base, power);
+		return res[0][0];
+
+	}
+
+	public int[][] Mult(int[][] base, int power) {
+		int[][] res = { { 1, 0 }, { 0, 1 } };
+		while (power > 0) {
+			if (power == 1) {
+				res = cal(res, base);
+				break;
+			}
+			if ((power & 1) == 1) {
+				res = cal(res, base);
+			}
+			power = power >> 1;
+			base = cal(base, base);
+		}
+		return res;
+	}
+
+	public int[][] cal(int[][] a, int[][] b) {
+		int[][] c = new int[2][2];
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 2; j++) {
+				for (int k = 0; k < 2; k++) {
+					c[i][j] += a[i][k] * b[k][j];
+				}
+			}
+		}
+		return c;
+	}
+
+}
+//total_testcases:51
+//total_correct:25
+//input_formatted:45
+//expected_output:134903163
+//code_output:1134903170
+//last_testcase:45

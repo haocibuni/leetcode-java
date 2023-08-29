@@ -1,0 +1,115 @@
+[TOC]
+
+# 方法1：递推（迭代）+分步
+
+- 每遍历一个结点，就存储值到数组中
+- 最后再翻转数组(可以直接stl库函数， 也可以使用双指针来实现自己实现翻转函数)
+
+* []
+
+```C++
+class Solution {
+public:
+    vector<int> reversePrint(ListNode* head) {
+        vector<int> ans;
+
+        while (head != NULL) {
+            ans.push_back(head->val);
+            head = head->next;
+        }
+        
+        reverse(ans.begin(), ans.end());
+
+        return ans;
+    }
+};
+```
+
+# 方法2：递归
+
+## 实现1：分步
+
+- 每递归一层就记录当前的值到数组中
+- 翻转数组
+
+* []
+
+```C++
+class Solution {
+public:
+    vector<int> reversePrint(ListNode* head) {
+        vector<int> ans;
+
+        function<void(ListNode*)> dfs = [&](ListNode* node) {
+            if (node == NULL) return;
+
+            ans.push_back(node->val);//先计算值
+            dfs(node->next);
+        };
+        
+        dfs(head);
+        reverse(ans.begin(), ans.end());
+        
+        return ans;
+    }
+};
+```
+
+## 实现2：一步到位，无需翻转
+
+- 注意：递结束，归开始才进行真正的操作：添加值到数组中(系统栈弹栈过程中)
+
+* []
+
+```C++
+class Solution {
+public:
+    vector<int> reversePrint(ListNode* head) {
+        vector<int> ans;
+
+        function<void(ListNode*)> dfs = [&](ListNode* node) {
+            if (node == NULL) return;//递结束条件
+
+            dfs(node->next);
+            ans.push_back(node->val);//递结束后，归的过程中会执行该代码！！！
+        };
+        
+        dfs(head);
+        
+        return ans;
+    }
+};
+```
+
+# 方法3：用栈模拟递归一步到位
+
+- **注意：递归本质在程序动态执行过程中就是系统栈来维护的**
+
+* []
+
+```C++
+class Solution {
+public:
+    vector<int> reversePrint(ListNode* head) {
+        stack<int> stk;
+        vector<int> ans;
+
+        //压栈：对应递归的递
+        while (head != NULL) {
+            stk.push(head->val);
+            head = head->next;
+        }
+
+        //弹栈过程中，才真正的进行添加操作(对应递归的归)
+        while (stk.size() != 0) {
+            auto x = stk.top();
+            stk.pop();
+
+            ans.push_back(x);
+        }
+
+        return ans;
+    }
+};
+```
+

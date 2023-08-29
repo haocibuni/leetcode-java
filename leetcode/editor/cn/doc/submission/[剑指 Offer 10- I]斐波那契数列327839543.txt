@@ -1,0 +1,72 @@
+class Solution {
+    public int fib(int n) {
+        //矩阵快速幂
+
+        if (n < 2) {
+            return n;
+        }
+
+        //定义乘积底数
+        int[][] base = {{1, 1}, {1, 0}};
+
+        //定义幂次
+        int power = n - 1;
+
+        int[][] ans = calc(base, power);
+
+        //按照公式，返回的是两行一列矩阵的第一个数
+        return ans[0][0];
+    }
+
+    //定义函数,求底数为 base 幂次为 power 的结果
+    public int[][] calc(int[][] base, int power) {
+
+        //定义变量，存储计算结果，此次定义为单位阵
+        int[][] res = {{1, 0}, {0, 1}};
+
+        //可以一直对幂次进行整除
+        while (power > 0) {
+
+            //1.若为奇数，需多乘一次 base
+            //2.若power除到1，乘积后得到res
+            //此处使用位运算在于效率高
+            
+            
+            res = mul(res,base);
+            power--;
+            
+
+            //不管幂次是奇还是偶，整除的结果是一样的如 5/2 和 4/2
+            //此处使用位运算在于效率高
+            
+
+            
+        }
+
+        return res;
+    }
+
+    //定义函数,求二维矩阵：两矩阵 a, b 的乘积
+    public int[][] mul(int[][] a, int[][] b) {
+
+        int[][] c = new int[2][2];
+
+        for (int i = 0; i < 2; i++) {
+
+            for (int j = 0; j < 2; j++) {
+
+                //矩阵乘积对应关系，自己举例演算一遍便可找到规律
+                c[i][j] = a[i][0] * b[0][j] + a[i][1] * b[1][j];
+
+            }
+        }
+
+        return c;
+    }
+}
+//total_testcases:51
+//total_correct:25
+//input_formatted:45
+//expected_output:134903163
+//code_output:1134903170
+//last_testcase:45

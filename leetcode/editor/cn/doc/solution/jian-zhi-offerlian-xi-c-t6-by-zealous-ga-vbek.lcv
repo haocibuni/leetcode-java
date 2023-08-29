@@ -1,0 +1,157 @@
+### 解法一
+
+直接替换法：创建一个辅助字符串，对原字符串依次判断。是空格就替换，不是就保留。
+
+### 运行结果
+
+![image.png](https://pic.leetcode.cn/1676786012-wrplGP-image.png)
+
+### 代码
+
+* cpp
+
+```cpp
+class Solution {
+public:
+    string replaceSpace(string s) {
+        string temp;
+        for (int i = 0; i < s.length(); i ++){
+            if (s[i] == ' ') temp += "%20";
+            else temp += s[i];
+        }
+        return temp;
+    }
+};
+```
+
+### 复杂度分析
+
+- 时间复杂度：***O(N)***。遍历一遍原字符串。
+- 空间复杂度：***O(N)***。辅助字符串占用 ***O(N)*** 的空间。
+
+### 解法二 直接使用函数
+
+* cpp
+
+```cpp
+class Solution {
+public:
+    string replaceSpace(string s) {
+        return s.replace(' ', "%20");
+    }
+};
+```
+
+### 解法三 双指针法
+
+i指向新长度的末尾，j指向旧长度的末尾，然后从后向前替换空格。
+
+***其实很多数组填充类的问题，都可以先预先给数组扩容带填充后的大小，然后在从后向前进行操作。***
+
+* cpp
+
+```cpp
+class Solution {
+public:
+    string replaceSpace(string s) {
+        int count = 0; // 统计空格数
+        int sOldSize = s.size();
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == ' ') {
+                count++;
+            }
+        }
+        // 扩充字符串s的大小
+        s.resize(s.size() + count * 2);
+        int sNewSize = s.size();
+        // 从后向前将空格替换成“%20”
+        for (int i = sNewSize - 1, j = sOldSize - 1; j < i; i--, j--) {
+            if (s[j] != ' ') {
+                s[i] = s[j];
+            } else {
+                s[i] = '0';
+                s[i - 1] = '2';
+                s[i - 2] = '%';
+                i -= 2;    
+            }
+        }
+        return s;
+    }
+};
+```
+
+### 复杂度分析
+
+- 时间复杂度：***O(N)***。
+- 空间复杂度：***O(1)***。
+
+### string复习
+
+包含头文件
+
+* cpp
+
+```cpp
+#include <string>//注意这里不是string.h string.h是C字符串头文件
+using namespace std;  //此语句必不可少，否则有的编译器无法识别
+```
+
+声明一个字符串变量很简单：
+
+* cpp
+
+```cpp
+string str;
+```
+
+这样我们就声明了一个字符串变量，但既然是一个类，就有构造函数和析构函数。上面的声明没有传入参数，所以就直接使用了string的默认的构造函数，这个函数所作的就是把str初始化为一个空字符串。string类的构造函数和析构函数如下：
+
+* cpp
+
+```cpp
+string s;  //生成一个空字符串s
+string s(str); //拷贝构造函数 生成str的复制品
+string s(str,stridx); //将字符串str内“始于位置stridx”的部分当作字符串的初值
+string s(str,stridx,strlen); //将字符串str内“始于stridx且长度顶多strlen”的部分作为字符串的初值
+string s(cstr); //将C字符串作为s的初值
+string s(chars,chars_len); //将C字符串前chars_len个字符作为字符串s的初值。
+string s(num,c); //生成一个字符串，包含num个c字符
+string s(beg,end); //以区间beg;end(不包含end)内的字符作为字符串s的初值
+s.~string(); //销毁所有字符，释放内存
+```
+
+字符串操作函数
+
+这里是C++字符串的重点：
+
+    a) =,assign()   //赋以新值
+    b) swap()   //交换两个字符串的内容
+    c) +=,append(),push_back() //在尾部添加字符
+    d) insert() //插入字符
+    e) erase() //删除字符
+    f) clear() //删除全部字符 
+    g) replace() //替换字符
+    h) + //串联字符串
+    i) ==,!=,<,<=,>,>=,compare()  //比较字符串
+    j) size(),length()  //返回字符数量
+    k) max_size() //返回字符的可能最大个数
+    l) empty()  //判断字符串是否为空
+    m) capacity() //返回重新分配之前的字符容量
+    n) reserve() //保留一定量内存以容纳一定数量的字符
+    o) [ ], at() //存取单一字符
+    p) >>,getline() //从stream读取某值
+    q) <<  //将谋值写入stream
+    r) copy() //将某值赋值为一个C_string
+    s) c_str() //将内容以C_string返回
+    t) data() //将内容以字符数组形式返回
+    u) substr() //返回某个子字符串
+    v) find()  //查找
+        rfind()
+        find_first_of()
+        find_last_of()
+        find_first_not_of()
+        find_last_not_of()
+    w) begin() end() //提供类似STL的迭代器支持
+    x) rbegin() rend() //逆向迭代器
+    y) get_allocator() //返回配置器
+

@@ -1,0 +1,21 @@
+class Solution {
+    public int fib(int n) {
+    	if(n==0) {
+    		return 0;
+    	}
+    	if (n==1) {
+    		return 1;
+			
+		}
+    	return fib(n-1)+fib(n-2)%1000000007;
+    }
+}
+//runtime:N/A
+//memory:N/A
+//total_testcases:51
+//total_correct:24
+//input_formatted:44
+//expected_output:701408733
+//code_output:
+//runtime_error:
+//last_testcase:44
